@@ -1,4 +1,6 @@
 import io
+import os
+
 import aiogram
 from aiogram.dispatcher.filters.state import State, StatesGroup
 import pydub
@@ -27,16 +29,17 @@ async def voice_handler(message: aiogram.types.Message, state: aiogram.dispatche
     await status_msg.edit_text('Форматирование аудио 🎧')
 
     audio = pydub.AudioSegment.from_file(audio_io)
-    audio_opus = audio.set_frame_rate(48000)
-    audio_opus = audio_opus.set_channels(1)
-    audio_opus = audio_opus.set_sample_width(4)
 
     await status_msg.edit_text('Экспорт 📤')
 
-    audio_opus.export(opus_io, format='ogg', codec='libopus', bitrate='16k')
+    audio.export(opus_io, format='ogg', codec='libopus', bitrate='80k')
     opus_io.seek(0)
 
     i_f = aiogram.types.InputFile(opus_io, filename='voice.opus')
+
+    for i in os.listdir():
+        if i.startswith('ffcache'):
+            os.remove(i)
 
     await message.reply_voice(i_f, message.text)
     await status_msg.edit_text('Готово ✅')
