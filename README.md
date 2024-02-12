@@ -10,7 +10,7 @@ ZwyTBot is a complex of Zwy's needed features.
 
 #### Features:
 * Audio => voice message
-* Split the image in two (pic | ture)
+* Split the image in two (like pic | ture)
 
 # Installation
 

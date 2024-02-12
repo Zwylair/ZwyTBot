@@ -5,8 +5,11 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 import splitter
 import voice_message_creator
 import settings
+import zwyFramework
 
 #
+server = zwyFramework.pinger.PingServer('0.0.0.0', 80)
+client = zwyFramework.pinger.PingClient('http://127.0.0.1', 80)
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(format='[%(asctime)s | %(levelname)s | %(name)s]: %(message)s')
@@ -39,6 +42,9 @@ async def end_handler(message: aiogram.types.Message, state: aiogram.dispatcher.
 
 
 async def main():
+    server.run()
+    client.run()
+
     me = await bot.me
 
     voice_message_creator.setup(dp, bot)
